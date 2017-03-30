@@ -11,7 +11,10 @@
     <meta name="Keywords" content="AngularJS, BootCamp, Taller" />
     
     <!-- Bootstrap core CSS -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">    
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <style>
+        input,select{margin-top:10px;margin-bottom: 10px;}
+    </style>
     
 </head>
 <body ng-app="petclinicPublic">    
@@ -31,8 +34,8 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a ui-sref="login" ng-if="!vm.isLogged()">Acceder</a></li>
             <li><a ui-sref="micuenta" ng-if="vm.isLogged()">Mi cuenta</a></li>
-            <li><a ui-sref="nuevasolicitud" ng-if="vm.isLogged()">Solicitar Cita</a></li>
-            <li><a ui-sref="miscitas" ng-if="vm.isLogged()">Mis citas</a></li>
+            <li><a ui-sref="nuevacita" ng-if="vm.isLogged()">Solicitar Cita</a></li>
+            <li><a ui-sref="listaCitas" ng-if="vm.isLogged()">Mis citas</a></li>
             <li><a href="#" ng-click="vm.logout()" ng-if="vm.isLogged()">Desconectar</a></li>
           </ul>
             <!--
@@ -44,7 +47,7 @@
       </div>
     </nav>    
     
-    <div class="container" ui-view>
+    <div class="container" ui-view="">
     </div>
     
     <!-- Cargamos angular -->
@@ -52,6 +55,8 @@
     <script src="http://unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="app.js"></script>
     <script src="controllers/loginController.js"></script>
+    <script src="controllers/NuevaCitaController.js"></script>
+    <script src="factories/citasFactory.js"></script>
     <script src="factories/ownersFactory.js"></script>
 </body>
 </html>
