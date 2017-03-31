@@ -11,16 +11,20 @@
             getHistorico:  function(){
                 return $http.get('http://localhost:8080/owner/'+ ownerId);
             },
-            createCita: function(cita){
-                return $http.post("http://localhost:8080/owner", owner);
+            createCita: function(c, id){
+                return $http.post('http://localhost:8080/requestvisit/'+id+'/newvisitrequest', c);
             },
-            getMascotas: function(){
-                return $http.get();
+            getMascotas: function(id){
+               return $http.get('http://localhost:8080/owners/'+id+'/pets');
+               
             },
             getVeterinariosDisponibles: function(){
-                return $http.get();
+                return $http.get('http://localhost:8080/vets');
             }
-            
+            ,
+            setEditState: function(requestVisitId){
+                return $http.put('http://localhost:8080/requestvisit/'+requestVisitId+'/changestate');
+            }
             
         }
         return interfaz;

@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.RequestVisit;
@@ -17,7 +16,7 @@ public class RequestVisitServiceImpl implements RequestVisitService{
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<RequestVisit> findRequestVisitAll() {
+	public Collection<RequestVisit> findRequestVisitAll() {
 			return requestVisitRepository.findAll();
 	}
 	
@@ -29,8 +28,27 @@ public class RequestVisitServiceImpl implements RequestVisitService{
 
 	@Override
 	@Transactional
-	public List<RequestVisit> findRequestVisitByOwnerId(Integer id) {
+	public Collection<RequestVisit> findRequestVisitByOwnerId(Integer id) {
 		return requestVisitRepository.findRequestVisitByOwnerId(id);
+	}
+
+	@Override
+	@Transactional
+	public RequestVisit findById(int id) {
+		return requestVisitRepository.findOne(id);
+	}
+
+	@Override
+	@Transactional
+	public RequestVisit updateState(RequestVisit requestVisit) {
+		if(requestVisit.getState()==0){
+			requestVisit.setState(1);
+			saveRequestVisit(requestVisit);
+			return requestVisit;
+		}
+		requestVisit.setState(0);
+		saveRequestVisit(requestVisit);
+		return requestVisit;
 	}
 
 	

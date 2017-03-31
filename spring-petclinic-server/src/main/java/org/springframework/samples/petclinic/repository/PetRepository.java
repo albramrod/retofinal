@@ -55,5 +55,6 @@ public interface PetRepository extends Repository<Pet, Integer> {
      */
     void save(Pet pet);
 
+    List<Pet> findByOwnerId(Integer id);
 }
 

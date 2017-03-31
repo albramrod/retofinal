@@ -1,13 +1,22 @@
 <!-- Aquí va tu vista -->
 <div class="col-sm-6">
-    <h3>Listado de solicitudes de visitas (Realizadas)</h3>
-    <ul>
-        <li ng-repeat="o in vm.citas">{{o.date}} {{o.pet.name}}</li>
-    </ul>
-</div>
-<div class="col-sm-6">
     <h3>Listado de solicitudes de visitas (Pendientes)</h3>
-    <ul>
-        <li  ng-repeat="o in vm.citas"></li>
-    </ul>
+
+    <table class="table">
+            <tr>
+                <th>#</th>
+                <th>Name</th> 
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+            <tr ng-repeat="o in vm.citas" ng-class="o.state ? 'success':'danger'">
+              <td ng-bind="o.id"></td>
+                <td ng-bind="o.pet.name"></td>
+                <td ng-bind="o.date"></td>
+              <td>
+                  <button type="button" ng-click="vm.setEditVisit(o.id)" class="btn btn-danger" ng-if="!o.state">X</button>
+                </td>
+            </tr>
+             
+          </table>
 </div>

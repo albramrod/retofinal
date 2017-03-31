@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,6 +61,11 @@ public class PetResource extends AbstractResourceController {
         owner.addPet(pet);
 
         save(pet, petRequest);
+    }
+    
+    @GetMapping("/owners/{ownerId}/pets")
+    public List<Pet> findByOwnerId(@PathVariable("ownerId") int ownerId) {
+    	return clinicService.findByOwnerId(ownerId);    
     }
 
     @PutMapping("/owners/{ownerId}/pets/{petId}")

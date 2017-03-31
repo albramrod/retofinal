@@ -3,8 +3,9 @@
     angular.module('petclinicPublic')
         .controller('NuevaCitaController', NuevaCitaController);
     
-    function NuevaCitaController(citasFactory,$state,$stateParams) {        
+    function NuevaCitaController(citasFactory,$state,$stateParams,ownersFactory) {        
         var vm = this;  
+        var id = ownersFactory.getCurrentOwner().id;
         
         citasFactory.getCitas().then(function(d){
            vm.citas = d.data;
@@ -15,22 +16,32 @@
                 vm.citasHistorico = d.data;
             });
         }
-        vm.createCita = function(/**/){
-            var id = vm.citas[vm.citas.length-1].id; 
+        vm.createCita = function(){
+            //var id = vm.citas[vm.citas.length-1].id; 
             //id+1
-            var o = {};
-            citasFactory.createCita(o);
-            vm.citas.push(o);
-        }
-        vm.getPets = function(){
-            citasFactory.getMascotas().then(function(d){
-               vm.mascotas = d.data;
+            var c = {'vetId':vm.vetSelect,'petId':vm.petSelect,'visitDate':vm.citaDate};
+            citasFactory.createCita(c,id).then(function(res){
+                console.log(res.data)
             });
+            //vm.citas.push(o);
         }
         
-        vm.getVetDisponibles = function(){ 
-            citasFactory.getVeterinariosDisponibles().then(function(d){
+        citasFactory.getMascotas(id).then(function(d){
+               vm.mascotas = d.data;
+            });
+        citasFactory.getVeterinariosDisponibles().then(function(d){
                vm.veterinarios = d.data;
+            });
+        
+        vm.setEditVisit = function(requestId){
+            citasFactory.setEditState(requestId).then(function(res){
+                console.log(res.data)
+                    vm.visit = res.data;
+                if(vm.citas[vm.visit.id-1].state==0) {
+                    vm.citas[vm.visit.id-1].state=1;
+                }else{
+                    vm.citas[vm.visit.id-1].state=0;
+                }
             });
         }
         
